@@ -1,0 +1,23 @@
+- name: Configuring MySQL
+  hosts: mysql 
+  become: yes
+  tasks:
+  - name: Installing MySQL
+    ansible.builtin.dnf:
+      name: mysql-server
+      state: present
+
+  - name: Enable and Starting MySQL Service
+    ansible.builtin.service:
+      name: mysqld
+      state: started
+      enabled: yes
+
+  - name: Setting Root Password
+    ansible.builtin.command: mysql_secure_installation --set-root-pass ExpenseApp@1
+
+  - name: Connecting DB Server
+    community.mysql.mysql_info:
+      login_user: root
+      login_password: ExpenseApp@1
+      login_host: mysql.manchem.site
