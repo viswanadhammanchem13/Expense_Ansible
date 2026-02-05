@@ -29,7 +29,7 @@
       dest: /usr/share/nginx/html
       remote_src: yes
     args:
-    chdir: /usr/share/nginx/html
+      chdir: /usr/share/nginx/html
 
   - name: Copying frontend service
     ansible.builtin.copy:
