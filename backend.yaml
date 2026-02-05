@@ -1,0 +1,54 @@
+- name: Configuring Backend Server
+  hosts: backend 
+  become: yes
+  tasks:
+  - name: Disabling NodeJS Module
+    ansible.builtin.command: dnf module disable nodejs -y
+
+  - name: Enableing NodeJS Module
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+
+  - name: Installing NodeJS
+    ansible.builtin.dnf:
+      name: nodejs
+      state: present
+
+  - name: Creating /app Directory
+    ansible.builtin.file:
+      path: /app
+      state: directory 
+
+  - name: Creating Expense user 
+    ansible.builtin.user:
+      name: expense 
+      home: /app
+      shell: /sbin/nologin
+      system: true
+
+  - name: Downloading Code
+    ansible.builtin.url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip
+
+  - name: Extracting the Code
+    ansible.builtin.unarchive :
+      src: tmp/backend.zip
+      dest: /app
+      remote_src: yes
+
+  - name: Installing Dependencies
+    community.general.npm:
+      name: npm
+      path: /app
+
+  - name: System Daemon-Reload
+    ansible.builtin.systemd_service:
+      daemon_reload: yes
+
+  - name: Enable and Service Start 
+    ansible.builtin.service:
+      name: backend
+      state: started
+      enabled: yes
+
+  
