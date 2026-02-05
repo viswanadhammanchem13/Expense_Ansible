@@ -30,3 +30,5 @@
       login_user: root
       login_password: ExpenseApp@1
       login_host: mysql.manchem.site
+      name: all
+      state: present
