@@ -26,9 +26,12 @@
     ansible.builtin.command: mysql_secure_installation --set-root-pass ExpenseApp@1
 
   - name: Connecting DB Server
-    community.mysql.mysql_db:
+    community.mysql.mysql_info:
       login_user: root
       login_password: ExpenseApp@1
       login_host: mysql.manchem.site
+    
+  - name: Connecting DateBase
+    community.mysql.mysql_db:
+      state: dump
       name: all
-      state: present
