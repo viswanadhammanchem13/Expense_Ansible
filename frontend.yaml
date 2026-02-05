@@ -1,39 +1,42 @@
-- name: Installing nginx
-  ansible.builtin.dnf:
-    name: nginx
-    state: present
+- name: Configuring Nginx
+  hosts: frontend
+  become: Yes
+  tasks:
+  - name: Installing nginx
+    ansible.builtin.dnf:
+      name: nginx
+      state: present
 
-- name: Enable and Starting Service
-  ansible.builtin.service:
-    name: nginx
-    state: started
-    enabled: yes
-  
-- name: Removing Html Default content
-  ansible.builtin.file:
-    path: /usr/share/nginx/html/*
-    state: absent
-
-- name: Downloading the front end code
-  ansible.builtin.get_url:
-    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
-    dest: /tmp/frontend.zip
-
-- name: Extracting the code
-  ansible.builtin.unarchive:
-    src: /tmp/frontend.zip
-    dest: /usr/share/nginx/html
-    remote_src: yes
-  args:
-   chdir: /usr/share/nginx/html
-
-- name: Copying frontend service
-  ansible.builtin.copy:
-    src: frontend.service
-    dest: /etc/nginx/default.d/expense.conf
-
-- name: Restaring Nginx service
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+  - name: Enable and Starting Service
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      enabled: yes
     
+  - name: Removing Html Default content
+    ansible.builtin.file:
+      path: /usr/share/nginx/html/*
+      state: absent
+
+  - name: Downloading the front end code
+    ansible.builtin.get_url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+      dest: /tmp/frontend.zip
+
+  - name: Extracting the code
+    ansible.builtin.unarchive:
+      src: /tmp/frontend.zip
+      dest: /usr/share/nginx/html
+      remote_src: yes
+    args:
+    chdir: /usr/share/nginx/html
+
+  - name: Copying frontend service
+    ansible.builtin.copy:
+      src: frontend.service
+      dest: /etc/nginx/default.d/expense.conf
+
+  - name: Restaring Nginx service
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
