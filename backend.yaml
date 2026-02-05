@@ -82,12 +82,12 @@
       target: /app/schema/backend.sql
     
 
-  - name: restart shipping
+  - name: restart backend
     tags:
     - import
     ansible.builtin.service:
       state: restarted
-      name: shipping
+      name: backend
 
 
 
