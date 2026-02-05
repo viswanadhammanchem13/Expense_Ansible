@@ -36,7 +36,7 @@
 
   - name: Copying frontend service
     ansible.builtin.copy:
-      src: frontend.service
+      src: expense.conf
       dest: /etc/nginx/default.d/expense.conf
 
   - name: Restaring Nginx service
