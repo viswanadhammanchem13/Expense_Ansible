@@ -9,9 +9,12 @@
 
   - name: Installing Py
     ansible.builtin.pip:
-      name: PyMySQL
+      name: {{ item }}
       state: present 
       executable: pip3.9
+    loop:
+    - cryptography
+    - pymysql
 
   - name: Enable and Starting MySQL Service
     ansible.builtin.service:
