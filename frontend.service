@@ -1,8 +1,11 @@
-proxy_http_version 1.1;
+[Unit]
+Description = Backend Service
 
-location /api/ { proxy_pass http://backend.manchem.site:8080/; }
+[Service]
+User=expense
+Environment=DB_HOST="mysql.manchem.site"
+ExecStart=/bin/node /app/index.js
+SyslogIdentifier=backend
 
-location /health {
-  stub_status on;
-  access_log off;
-}
+[Install]
+WantedBy=multi-user.target
