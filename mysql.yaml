@@ -33,5 +33,5 @@
     
   - name: Connecting DateBase
     community.mysql.mysql_db:
-      state: dump
+      state: present
       name: all
