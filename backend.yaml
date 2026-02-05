@@ -56,4 +56,29 @@
       state: started
       enabled: yes
 
+  - name: Installing mysql
+    ansible.builtin.dnf:
+      name: mysql
+      state: present
+
+  - name: Loading the Data into MYSQLDB
+    
+    community.mysql.mysql_db:
+      name: all
+      login_user: root
+      login_password: ExpenseApp@1
+      login_host: mysql.manchem.site
+      state: import
+      target: /app/schema/backend.sql
+    
+
+  - name: restart shipping
+    tags:
+    - import
+    ansible.builtin.service:
+      state: restarted
+      name: shipping
+
+
+
   
