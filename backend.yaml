@@ -84,7 +84,7 @@
 
   - name: Check loaded Products
     ansible.builtin.debug:
-      msg: {{ backend_output }}
+      msg: "{{ backend_output }}"
     
 
   - name: restart backend
