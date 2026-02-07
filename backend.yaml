@@ -72,7 +72,6 @@
 
 
   - name: Loading the Data into MYSQLDB
-    
     community.mysql.mysql_db:
       name: all
       login_user: root
