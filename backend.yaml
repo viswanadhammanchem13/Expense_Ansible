@@ -83,7 +83,8 @@
 
   - name: Check loaded Products
     ansible.builtin.debug:
-      msg: "{{ backend_output }}"
+      msg: "Products are loaded: {{ backend_output }}"
+    when: backend_output==0
     
 
   - name: restart backend
