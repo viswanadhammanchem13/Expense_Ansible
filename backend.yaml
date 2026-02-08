@@ -79,7 +79,7 @@
       login_host: mysql.manchem.site
       state: import
       target: /app/schema/backend.sql
-      register: backend_output
+    register: backend_output
 
   - name: Check loaded Products
     ansible.builtin.debug:
